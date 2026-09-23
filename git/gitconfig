@@ -1,0 +1,39 @@
+# Git aliases shared across machines. install.sh includes this from ~/.gitconfig.
+#
+# The branch used by `git prm` defaults to "main". Override it globally
+# (./install.sh --main-branch master) or per repo:
+#   git config dotfiles.mainBranch master        # just this repo
+
+[alias]
+	# Last 20 commits as a graph of HEAD plus its upstream (if any), so you can
+	# see where the local branch and origin/<branch> have diverged.
+	# Extra args pass through, e.g. `git lg -50` or `git lg -- path/`.
+	lg = "!f() { \
+		up=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null); \
+		git log --graph --date=relative -n 20 \
+			--pretty='%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %s %C(dim)(%ad, %an)%C(reset)' \
+			HEAD $up \"$@\"; \
+	}; f"
+
+	# Same as lg but across every local and remote branch.
+	lga = lg --all
+
+	# Plain, graph-free summary of the last 10 commits.
+	ls = log --oneline --decorate -n 10
+
+	st = status -sb
+
+	# Rebase the current branch on top of origin's main branch.
+	prm = "!git pull --rebase origin \"$(git config dotfiles.mainBranch || echo main)\""
+
+	# Push the current branch and track it on origin.
+	psu = push --set-upstream origin HEAD
+
+	# Safer force push: refuses if someone else pushed in the meantime.
+	pf = push --force-with-lease
+
+	# Fold staged changes into the last commit, keeping its message.
+	amend = commit --amend --no-edit
+
+	# Undo the last commit, keeping its changes staged.
+	undo = reset --soft HEAD~1
