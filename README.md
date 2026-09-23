@@ -41,7 +41,7 @@ Flags win over env vars. `--main-branch` is only written when given, so re-runni
 | `gprm` | `git prm` | `git pull --rebase origin <main branch>` |
 | `gpsu` | `git psu` | Push current branch and set upstream on `origin` |
 | `gpf` | `git pf` | `git push --force-with-lease` |
-| | `git amend` | Add staged changes to the last commit, same message |
+| `gamend` | `git amend` | Add staged changes to the last commit, same message |
 | | `git undo` | Undo the last commit, keep its changes staged |
 
 The git aliases work in any shell; the short names need zsh.
