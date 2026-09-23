@@ -1,0 +1,4 @@
+# Always check out with LF, even when core.autocrlf=true (e.g. a Windows
+# host's gitconfig copied into a Dev Container). CRLF breaks the shebang
+# ("env: 'bash\r'"), the zsh aliases and the multi-line git aliases.
+* text=auto eol=lf
