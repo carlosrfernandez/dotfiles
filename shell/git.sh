@@ -11,3 +11,10 @@ alias gprm='git prm'
 alias gpsu='git psu'
 alias gpf='git pf'
 alias gamend='git amend'
+alias gwl='git wl'
+
+# Create the worktree, then cd into it.
+gwcm() {
+	local dir
+	dir=$(git wcm "$@") && cd "$dir"
+}

@@ -42,6 +42,8 @@ Flags win over env vars. `--main-branch` is only written when given, so re-runni
 | `gpsu` | `git psu` | Push current branch and set upstream on `origin` |
 | `gpf` | `git pf` | `git push --force-with-lease` |
 | `gamend` | `git amend` | Add staged changes to the last commit, same message |
+| `gwl` | `git wl` | `git worktree list` |
+| `gwcm <name>` | `git wcm <name>` | New worktree on new branch `<name>` from `origin/<main branch>`, created next to the repo (`~/src/repo` → `~/src/repo-<name>`); `gwcm` also `cd`s into it |
 | | `git undo` | Undo the last commit, keep its changes staged |
 
 The git aliases work in any shell; the short names need zsh.

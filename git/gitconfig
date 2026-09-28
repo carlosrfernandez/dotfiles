@@ -37,3 +37,20 @@
 
 	# Undo the last commit, keeping its changes staged.
 	undo = reset --soft HEAD~1
+
+	wl = worktree list
+
+	# New worktree on a new branch <name>, started from origin's main branch
+	# (dotfiles.mainBranch, default main). It goes next to the main checkout:
+	# ~/src/repo + `git wcm feat/x` -> ~/src/repo-feat-x
+	# The branch doesn't track origin/main, so `git psu` sets its upstream.
+	# Prints the new path last so the shell `gwcm` can cd into it.
+	wcm = "!f() { \
+		[ -n \"$1\" ] || { echo 'usage: git wcm <branch-name>' >&2; return 1; }; \
+		base=$(git config dotfiles.mainBranch || echo main); \
+		main=$(git worktree list --porcelain | sed -n '1s/^worktree //p'); \
+		path=\"$main-$(printf %s \"$1\" | tr / -)\"; \
+		git fetch -q origin \"$base\" && \
+		git worktree add --no-track -b \"$1\" \"$path\" \"origin/$base\" >&2 && \
+		echo \"$path\"; \
+	}; f"
