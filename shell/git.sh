@@ -18,3 +18,11 @@ gwcm() {
 	local dir
 	dir=$(git wcm "$@") && cd "$dir"
 }
+
+# Remove the worktree; if we were inside it, cd to the main checkout.
+gwrm() {
+	local main
+	main=$(git wrm "$@") || return
+	[ -d "$PWD" ] || cd "$main"
+}
+alias gwp='git wp'

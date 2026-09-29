@@ -44,6 +44,8 @@ Flags win over env vars. `--main-branch` is only written when given, so re-runni
 | `gamend` | `git amend` | Add staged changes to the last commit, same message |
 | `gwl` | `git wl` | `git worktree list` |
 | `gwcm <name>` | `git wcm <name>` | New worktree on new branch `<name>` from `origin/<main branch>`, created next to the repo (`~/src/repo` → `~/src/repo-<name>`); `gwcm` also `cd`s into it |
+| `gwrm <name\|path>` | `git wrm` | Remove a worktree by branch name or path. Refuses if it has uncommitted or untracked files (no `--force`). Keeps the branch. If you were inside it, `cd`s to the main checkout |
+| `gwp` | `git wp` | `git worktree prune -v`: forget worktrees whose folders were deleted by hand |
 | | `git undo` | Undo the last commit, keep its changes staged |
 
 The git aliases work in any shell; the short names need zsh.

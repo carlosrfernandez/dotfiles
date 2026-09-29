@@ -54,3 +54,22 @@
 		git worktree add --no-track -b \"$1\" \"$path\" \"origin/$base\" >&2 && \
 		echo \"$path\"; \
 	}; f"
+
+	# Remove a worktree by branch name (as given to wcm) or by path.
+	# No --force: git refuses if it has modified or untracked files, and any
+	# git error and exit code pass straight through. The branch is kept, so
+	# commits made there are never lost; delete it separately with
+	# `git branch -d <name>` (which itself refuses if it's unmerged).
+	# Prints the main checkout's path last so the shell `gwrm` can cd there.
+	wrm = "!f() { \
+		[ $# -eq 1 ] || { echo 'usage: git wrm <branch-name|path>' >&2; return 1; }; \
+		cd \"./$GIT_PREFIX\" || return; \
+		main=$(git worktree list --porcelain | sed -n '1s/^worktree //p'); \
+		byname=\"$main-$(printf %s \"$1\" | tr / -)\"; \
+		if [ -d \"$1\" ]; then target=$1; elif [ -d \"$byname\" ]; then target=$byname; else target=$1; fi; \
+		git worktree remove \"$target\" && echo \"$main\"; \
+	}; f"
+
+	# Forget worktrees whose folders were deleted by hand. Only touches
+	# git's own bookkeeping, never files; -v lists everything it prunes.
+	wp = worktree prune -v
